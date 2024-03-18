@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Prediction Request</title>
+</head>
+<body>
+    <h1>Send Prediction Request</h1>
+    <form id="prediction-form" action="http://127.0.0.1:5000/predict" method="post" enctype="application/json">
+        <label for="feature1">Feature 1:</label>
+        <input type="text" id="feature1" name="feature1"><br><br>
+        
+        <label for="feature2">Feature 2:</label>
+        <input type="text" id="feature2" name="feature2"><br><br>
+
+        <label for="feature3">Feature 3:</label>
+        <input type="text" id="feature3" name="feature3"><br><br>
+
+        <label for="feature4">Feature 4:</label>
+        <input type="text" id="feature4" name="feature4"><br><br>
+        
+        <button type="button" onclick="sendPredictionRequest()">Predict</button>
+    </form>
+
+    <script>
+        function sendPredictionRequest() {
+            var form = document.getElementById("prediction-form");
+            var formData = {
+                "feature1": form.elements["feature1"].value,
+                "feature2": form.elements["feature2"].value,
+                "feature3": form.elements["feature3"].value,
+                "feature4": form.elements["feature4"].value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", form.action);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    alert("Prediction result: " + xhr.responseText);
+                } else {
+                    alert("Error: " + xhr.statusText);
+                }
+            };
+            xhr.send(JSON.stringify(formData));
+        }
+    </script>
+</body>
+</html>
